@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#F8FAFC] text-slate-800 antialiased font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-slate-900;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Glassmorphism & Card styling */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.premium-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.premium-card:hover {
+  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+}
+
+/* Status Badges */
+.badge-on-track {
+  @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+}
+
+.badge-attention {
+  @apply bg-amber-50 text-amber-700 border border-amber-200;
+}
+
+.badge-alert {
+  @apply bg-rose-50 text-rose-700 border border-rose-200;
+}
+
+.badge-delayed {
+  @apply bg-orange-50 text-orange-700 border border-orange-200;
+}
+
+.badge-completed {
+  @apply bg-indigo-50 text-indigo-700 border border-indigo-200;
+}
+
+/* Hide scrollbar for tabs while keeping horizontal scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
