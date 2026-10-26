@@ -165,6 +165,8 @@ export const ProjectsPage: React.FC = () => {
               onClick={() => setViewMode('grid')}
               className={`p-1.5 rounded-lg cursor-pointer ${viewMode === 'grid' ? 'bg-white text-slate-900 shadow-xs' : 'hover:text-slate-900'}`}
               title="Grid View"
+              aria-label="Grid view"
+              aria-pressed={viewMode === 'grid'}
             >
               <LayoutGrid className="w-4 h-4" />
             </button>
@@ -172,6 +174,8 @@ export const ProjectsPage: React.FC = () => {
               onClick={() => setViewMode('list')}
               className={`p-1.5 rounded-lg cursor-pointer ${viewMode === 'list' ? 'bg-white text-slate-900 shadow-xs' : 'hover:text-slate-900'}`}
               title="List View"
+              aria-label="List view"
+              aria-pressed={viewMode === 'list'}
             >
               <List className="w-4 h-4" />
             </button>
@@ -213,6 +217,10 @@ export const ProjectsPage: React.FC = () => {
                     src={project.coverImage || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6"}
                     alt={project.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = '/interior_studio_office_bg.jpg';
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />
                   

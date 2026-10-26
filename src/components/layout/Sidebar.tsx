@@ -245,7 +245,7 @@ export const Sidebar: React.FC = () => {
       <div className="flex-1 px-3 py-1 space-y-3 overflow-y-auto">
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-0.5">
-            <div className="px-3 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <div className="px-3 pt-2 pb-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">
               {group.groupLabel}
             </div>
             {group.items.map((item) => {
@@ -255,14 +255,14 @@ export const Sidebar: React.FC = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer min-h-[40px] ${
+                  className={`relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all cursor-pointer min-h-[42px] ${
                     isActive
-                      ? 'bg-brand-600/20 text-white border border-brand-500/30 shadow-xs font-bold'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                      ? 'bg-gradient-to-r from-brand-600/25 to-brand-500/10 text-white border border-brand-400/25 shadow-sm font-bold'
+                      : 'text-slate-400 hover:text-white hover:bg-white/[0.055]'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-brand-400' : 'text-slate-400'}`} />
+                    <Icon className={`w-[17px] h-[17px] ${isActive ? 'text-brand-300' : 'text-slate-500 group-hover:text-slate-300'}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge !== undefined && item.badge > 0 && (
@@ -340,11 +340,15 @@ export const Sidebar: React.FC = () => {
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="relative shrink-0">
-              <img
-                src={profile?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"}
-                alt={displayName}
-                className="w-8 h-8 rounded-lg object-cover ring-1 ring-brand-500/30"
-              />
+              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand-400 to-indigo-600 text-[11px] font-extrabold text-white ring-1 ring-white/20">
+                <span aria-hidden="true">{displayName.split(/\s+/).map(part => part[0]).slice(0, 2).join('').toUpperCase()}</span>
+                {profile?.avatar_url && <img
+                  src={profile.avatar_url}
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(event) => { event.currentTarget.style.display = 'none'; }}
+                />}
+              </div>
               <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-slate-900" />
             </div>
             <div className="min-w-0 flex-1">

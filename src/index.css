@@ -3,13 +3,55 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+    --app-canvas: #f5f7fc;
+    --brand-primary: #3157ed;
+    --brand-navy: #10192d;
+    --brand-cyan: #20b8b1;
+    --brand-gold: #d5a85e;
+  }
+
+  html {
+    min-width: 320px;
+    scroll-behavior: smooth;
+    background: var(--app-canvas);
+  }
+
   body {
-    @apply bg-[#F8FAFC] text-slate-800 antialiased font-sans;
+    @apply text-slate-800 antialiased font-sans;
+    min-width: 320px;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 82% 0%, rgba(49, 87, 237, 0.055), transparent 34rem),
+      var(--app-canvas);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-slate-900;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid rgba(49, 87, 237, 0.35);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    color: #fff;
+    background: #3157ed;
   }
 }
 
@@ -42,14 +84,115 @@
 
 .premium-card {
   background: #ffffff;
-  border-radius: 1rem;
-  border: 1px solid #f1f5f9;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(226, 232, 240, 0.86);
+  box-shadow: 0 2px 5px rgba(16, 25, 45, 0.025), 0 12px 30px -22px rgba(16, 25, 45, 0.22);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 .premium-card:hover {
-  box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  border-color: rgba(49, 87, 237, 0.22);
+  box-shadow: 0 16px 34px -22px rgba(16, 25, 45, 0.34), 0 5px 12px -8px rgba(49, 87, 237, 0.12);
+}
+
+.app-shell {
+  background: transparent;
+}
+
+.app-main {
+  width: 100%;
+  max-width: 1680px;
+}
+
+.app-topbar {
+  min-height: 4.25rem;
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(226, 232, 240, 0.86);
+  box-shadow: 0 4px 18px -18px rgba(16, 25, 45, 0.42);
+}
+
+.dashboard-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.6rem;
+  background:
+    radial-gradient(ellipse at 83% 18%, rgba(65, 115, 255, 0.34), transparent 27rem),
+    radial-gradient(ellipse at 63% 120%, rgba(32, 184, 177, 0.17), transparent 26rem),
+    linear-gradient(118deg, #10192d 4%, #14213b 58%, #1b2d52 100%);
+  box-shadow: 0 18px 40px -25px rgba(16, 25, 45, 0.7);
+}
+
+.dashboard-hero::before,
+.dashboard-hero::after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 9999px;
+}
+
+.dashboard-hero::before {
+  width: 29rem;
+  height: 29rem;
+  top: -19rem;
+  right: 6%;
+  box-shadow: 0 0 0 2.8rem rgba(255, 255, 255, 0.018), 0 0 0 5.6rem rgba(255, 255, 255, 0.014);
+}
+
+.dashboard-hero::after {
+  width: 18rem;
+  height: 18rem;
+  bottom: -15rem;
+  right: 34%;
+}
+
+.dashboard-hero-panel {
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.075);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+}
+
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 148px;
+}
+
+.metric-card::after {
+  position: absolute;
+  right: -2.5rem;
+  bottom: -4.8rem;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 9999px;
+  background: var(--metric-tint, rgba(49, 87, 237, 0.06));
+  content: "";
+  pointer-events: none;
+  transition: transform 220ms ease;
+}
+
+.metric-card:hover::after {
+  transform: scale(1.35);
+}
+
+.metric-card--blue { --metric-tint: rgba(49, 87, 237, 0.08); }
+.metric-card--teal { --metric-tint: rgba(32, 184, 177, 0.1); }
+.metric-card--violet { --metric-tint: rgba(124, 92, 242, 0.08); }
+.metric-card--amber { --metric-tint: rgba(213, 168, 94, 0.12); }
+
+.section-heading {
+  letter-spacing: -0.025em;
+}
+
+.project-cover-fallback {
+  background:
+    linear-gradient(135deg, rgba(16, 25, 45, 0.16), rgba(49, 87, 237, 0.12)),
+    url('/interior_studio_office_bg.jpg') center 52% / cover,
+    linear-gradient(135deg, #243654, #536887);
 }
 
 /* Status Badges */
@@ -82,3 +225,27 @@
   scrollbar-width: none;
 }
 
+@media (max-width: 639px) {
+  .app-topbar {
+    min-height: 3.75rem;
+  }
+
+  .dashboard-hero {
+    border-radius: 1.25rem;
+  }
+
+  .metric-card {
+    min-height: 132px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

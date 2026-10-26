@@ -96,6 +96,11 @@ export const OverviewPage: React.FC = () => {
 
   const userFirstName = profile?.full_name?.trim().split(' ')[0] || (isDemoMode ? 'Aarav' : 'Designer');
   const companyName = organization?.name || (isDemoMode ? 'Apni Estate Interiors' : 'Your Studio');
+  const activeProjects = projects.filter(project => project.status !== 'Completed');
+  const projectsNeedingAttention = activeProjects.filter(project => project.status !== 'On Track').length;
+  const deliveryHealthPercent = activeProjects.length
+    ? Math.round((activeProjects.length - projectsNeedingAttention) / activeProjects.length * 100)
+    : 0;
   const contractValue = projects.reduce((sum, project) => sum + Number(project.contract_value ?? project.budget ?? 0), 0);
   const revenueReceived = clientPayments.reduce((sum, payment) => sum + (Number(payment.paid_amount) || 0), 0);
   const actualCost = expenses.reduce((sum, expense) => sum + (Number(expense.amount) || 0), 0);
@@ -112,9 +117,71 @@ export const OverviewPage: React.FC = () => {
     purchase.status === 'Draft' || purchase.status === 'Ordered' || purchase.status === 'Partially Received'
   ).length;
   const overdueTaskCount = tasks.filter(task =>
+    Boolean(task.due_date || task.dueDate) &&
     (task.due_date || task.dueDate || '') < new Date().toISOString().slice(0, 10) &&
     task.status !== 'Completed' && task.status !== 'Cancelled'
   ).length;
+  const today = new Date().toISOString().slice(0, 10);
+  const daysLate = (date: string) => {
+    const dueTime = Date.parse(`${date}T00:00:00Z`);
+    const todayTime = Date.parse(`${today}T00:00:00Z`);
+    return Number.isFinite(dueTime) && Number.isFinite(todayTime)
+      ? Math.max(1, Math.floor((todayTime - dueTime) / 86400000))
+      : 1;
+  };
+  const attentionQueue = [
+    ...tasks
+      .filter(task =>
+        Boolean(task.due_date || task.dueDate) &&
+        (task.due_date || task.dueDate || '') < today &&
+        task.status !== 'Completed' && task.status !== 'Cancelled'
+      )
+      .sort((a, b) => (a.due_date || a.dueDate || '').localeCompare(b.due_date || b.dueDate || ''))
+      .map(task => ({
+        id: `task-${task.id}`,
+        title: task.title,
+        context: [task.projectName || projects.find(project => project.id === (task.project_id || task.projectId))?.name, task.assigned_staff_name].filter(Boolean).join(' · ') || 'Unassigned project task',
+        label: 'Overdue task',
+        detail: `${daysLate(task.due_date || task.dueDate || today)}d overdue`,
+        tone: 'rose',
+        onSelect: () => setCurrentPage('tasks')
+      })),
+    ...purchases
+      .filter(purchase =>
+        purchase.expected_delivery &&
+        purchase.expected_delivery < today &&
+        !['Received', 'Delivered', 'Cancelled', 'received', 'delivered', 'cancelled'].includes(purchase.status)
+      )
+      .map(purchase => ({
+        id: `delivery-${purchase.id}`,
+        title: `${purchase.po_number} · ${purchase.vendorName || 'Vendor'}`,
+        context: purchase.projectName || projects.find(project => project.id === (purchase.project_id || purchase.projectId))?.name || 'Project purchase',
+        label: 'Delivery overdue',
+        detail: `${daysLate(purchase.expected_delivery || today)}d late`,
+        tone: 'amber',
+        onSelect: () => setCurrentPage('purchases')
+      })),
+    ...activeProjects
+      .filter(project => project.status !== 'On Track')
+      .map(project => ({
+        id: `project-${project.id}`,
+        title: project.name,
+        context: `${project.city || project.location} · ${project.progress}% complete`,
+        label: project.status,
+        detail: 'Review site',
+        tone: project.status === 'Delayed' ? 'rose' : 'amber',
+        onSelect: () => openProjectDetail(project.id)
+      })),
+    ...(pendingClientApprovals > 0 ? [{
+      id: 'client-approvals',
+      title: `${pendingClientApprovals} quotation${pendingClientApprovals === 1 ? '' : 's'} awaiting client decision`,
+      context: 'Review sent quotations and follow up with clients',
+      label: 'Client approval',
+      detail: 'Review',
+      tone: 'blue',
+      onSelect: () => setCurrentPage('quotations')
+    }] : [])
+  ].slice(0, 5);
 
   // Filter projects for the dashboard section
   const filteredProjects = projects.filter(p => {
@@ -283,40 +350,78 @@ export const OverviewPage: React.FC = () => {
   // POPULATED DASHBOARD VIEW (When Projects Exist)
   // ============================================================================
   return (
-    <div className="space-y-8 animate-in fade-in duration-300 pb-12">
+    <div className="space-y-6 sm:space-y-7 animate-in fade-in duration-300 pb-12">
       {/* Dashboard Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 tracking-tight">
-              Good day, {userFirstName} 👋
-            </h1>
+      <section className="dashboard-hero grid gap-6 p-5 text-white sm:p-7 lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.42fr)] lg:items-center lg:p-8">
+        <div className="relative z-10">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-blue-100">
+            <Sparkles className="h-3.5 w-3.5 text-amber-300" />
+            Studio snapshot
           </div>
-          <p className="text-sm text-slate-500 mt-1">
-            Operational summary for <strong className="text-slate-800 font-bold">{companyName}</strong> across <strong className="text-slate-700 font-semibold">{stats.activeProjectsCount} active projects</strong>.
+          <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-[2.1rem]">
+            Good day, {userFirstName}
+            <span aria-hidden="true" className="ml-2 text-amber-300">✦</span>
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">
+            A clear view of <strong className="font-bold text-white">{companyName}</strong> — your team's live project delivery, financial position, and priorities.
           </p>
+          <div className="mt-5 flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => setIsNewProjectModalOpen(true)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-slate-900 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-blue-50"
+            >
+              <Plus className="h-4 w-4 text-brand-600" />
+              New project
+            </button>
+            <span className="text-xs font-medium text-slate-300">
+              {stats.activeProjectsCount} active project{stats.activeProjectsCount === 1 ? '' : 's'} across your portfolio
+            </span>
+          </div>
         </div>
-
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setIsNewProjectModalOpen(true)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-500/20 hover:shadow-lg transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>+ New Project</span>
-          </button>
+        <div className="dashboard-hero-panel relative z-10 rounded-2xl p-4 sm:p-5">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-blue-100/70">Portfolio pulse</p>
+              <p className="mt-1.5 text-xl font-extrabold tracking-tight text-white">{stats.activeProjectsCount} live sites</p>
+            </div>
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-300/10 text-emerald-300">
+              <TrendingUp className="h-4 w-4" />
+            </span>
+          </div>
+          <div className="mt-4 flex items-center justify-between gap-3 text-xs">
+            <span className="font-semibold text-slate-300">
+              {projectsNeedingAttention === 0 ? 'All active sites on track' : `${projectsNeedingAttention} site${projectsNeedingAttention === 1 ? '' : 's'} need attention`}
+            </span>
+            <span className="font-extrabold text-white">
+              {deliveryHealthPercent}%
+            </span>
+          </div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-emerald-300 to-cyan-300 transition-[width] duration-700"
+              style={{
+                width: `${deliveryHealthPercent}%`
+              }}
+            />
+          </div>
+          <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
+            <span className="text-xs text-slate-300">Projects needing attention</span>
+            <span className={`rounded-full px-2.5 py-1 text-[11px] font-extrabold ${projectsNeedingAttention ? 'bg-amber-300/15 text-amber-200' : 'bg-emerald-300/15 text-emerald-200'}`}>
+              {projectsNeedingAttention}
+            </span>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* 4 Premium KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-4">
         {/* KPI 1: Active Projects */}
         <div 
           onClick={() => setCurrentPage('projects')}
-          className="premium-card p-5 cursor-pointer group hover:border-brand-300 transition-all relative overflow-hidden"
+          className="premium-card metric-card metric-card--blue p-5 cursor-pointer group hover:border-brand-300 transition-all"
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Active Projects</span>
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.11em] text-slate-500">Active projects</span>
             <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
               <FolderKanban className="w-4 h-4" />
             </div>
@@ -327,14 +432,14 @@ export const OverviewPage: React.FC = () => {
           </div>
           <div className="flex items-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg w-fit">
             <AlertCircle className="w-3.5 h-3.5" />
-            <span>{stats.needAttentionCount} need attention</span>
+            <span>{projectsNeedingAttention} need attention</span>
           </div>
         </div>
 
         {/* KPI 2: Total Project Value */}
-        <div className="premium-card p-5 relative overflow-hidden">
+        <div className="premium-card metric-card metric-card--teal p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Total Project Value</span>
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.11em] text-slate-500">Total project value</span>
             <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
               <TrendingUp className="w-4 h-4" />
             </div>
@@ -350,10 +455,10 @@ export const OverviewPage: React.FC = () => {
         {/* KPI 3: Total Budget */}
         <div 
           onClick={() => setCurrentPage('budget')}
-          className="premium-card p-5 cursor-pointer group hover:border-brand-300 transition-all relative overflow-hidden"
+          className="premium-card metric-card metric-card--violet p-5 cursor-pointer group hover:border-brand-300 transition-all"
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Total Budget</span>
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.11em] text-slate-500">Total budget</span>
             <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
               <IndianRupee className="w-4 h-4" />
             </div>
@@ -369,10 +474,10 @@ export const OverviewPage: React.FC = () => {
         {/* KPI 4: Total Spent */}
         <div 
           onClick={() => setCurrentPage('expenses')}
-          className="premium-card p-5 cursor-pointer group hover:border-brand-300 transition-all relative overflow-hidden"
+          className="premium-card metric-card metric-card--amber p-5 cursor-pointer group hover:border-brand-300 transition-all"
         >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Total Spent</span>
+            <span className="text-[11px] font-extrabold uppercase tracking-[0.11em] text-slate-500">Total spent</span>
             <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
               <PieChartIcon className="w-4 h-4" />
             </div>
@@ -386,12 +491,12 @@ export const OverviewPage: React.FC = () => {
         </div>
       </div>
 
-      <section className="grid gap-4 lg:grid-cols-[1.35fr_0.8fr_0.85fr]">
+      <section className="grid gap-4 xl:grid-cols-[1.35fr_0.8fr_0.85fr]">
         <div className="premium-card p-5">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-widest text-brand-600">Portfolio finance</p>
-              <h2 className="mt-1 text-sm font-extrabold text-slate-900">Live contract &amp; cost position</h2>
+              <h2 className="section-heading mt-1 text-base font-extrabold text-slate-900">Live contract &amp; cost position</h2>
             </div>
             <button onClick={() => setCurrentPage('reports')} className="text-xs font-bold text-brand-700 hover:underline">Financial reports</button>
           </div>
@@ -451,6 +556,58 @@ export const OverviewPage: React.FC = () => {
         </div>
       </section>
 
+      <section className="premium-card overflow-hidden" aria-labelledby="priority-actions-heading">
+        <div className="flex flex-col gap-3 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[10px] font-extrabold uppercase tracking-widest text-brand-600">Keep work moving</p>
+            <h2 id="priority-actions-heading" className="section-heading mt-1 text-base font-extrabold text-slate-900">Priority actions</h2>
+          </div>
+          <span className="w-fit rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600">
+            {attentionQueue.length} {attentionQueue.length === 1 ? 'item' : 'items'} shown
+          </span>
+        </div>
+        {attentionQueue.length ? (
+          <div className="divide-y divide-slate-100">
+            {attentionQueue.map(item => (
+              <button
+                key={item.id}
+                onClick={item.onSelect}
+                className="group flex w-full items-center gap-3 px-5 py-3.5 text-left transition-colors hover:bg-slate-50 focus-visible:bg-slate-50 sm:gap-4"
+              >
+                <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${
+                  item.tone === 'rose' ? 'bg-rose-50 text-rose-600' :
+                  item.tone === 'amber' ? 'bg-amber-50 text-amber-700' : 'bg-blue-50 text-blue-700'
+                }`}>
+                  {item.tone === 'blue' ? <FileText className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="flex flex-wrap items-center gap-2">
+                    <span className="truncate text-sm font-bold text-slate-900">{item.title}</span>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                      item.tone === 'rose' ? 'bg-rose-50 text-rose-700' :
+                      item.tone === 'amber' ? 'bg-amber-50 text-amber-800' : 'bg-blue-50 text-blue-700'
+                    }`}>{item.label}</span>
+                  </span>
+                  <span className="mt-0.5 block truncate text-xs text-slate-500">{item.context}</span>
+                </span>
+                <span className="hidden shrink-0 text-xs font-semibold text-slate-500 sm:block">{item.detail}</span>
+                <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-400 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-600" />
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="flex items-center gap-3 px-5 py-6">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700">
+              <CheckCircle2 className="h-4 w-4" />
+            </span>
+            <div>
+              <p className="text-sm font-bold text-slate-900">You’re all caught up</p>
+              <p className="text-xs text-slate-500">No overdue tasks, deliveries, site alerts, or client decisions need action.</p>
+            </div>
+          </div>
+        )}
+      </section>
+
       {/* Projects Section */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -507,7 +664,7 @@ export const OverviewPage: React.FC = () => {
 
         {/* Project Cards Grid */}
         {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             {filteredProjects.slice(0, 8).map((project) => {
               const daysInfo = calculateDaysRemaining(project.deadline);
               const remainingBudget = Math.max(0, project.budget - project.spent);
@@ -522,11 +679,15 @@ export const OverviewPage: React.FC = () => {
                   className="premium-card overflow-hidden cursor-pointer group flex flex-col justify-between hover:-translate-y-1 transition-all duration-200"
                 >
                   {/* Card Cover Image with Status Overlay */}
-                  <div className="relative h-44 w-full overflow-hidden bg-slate-100">
+                  <div className="project-cover-fallback relative h-44 w-full overflow-hidden">
                     <img
                       src={project.coverImage || "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6"}
                       alt={project.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = '/interior_studio_office_bg.jpg';
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
                     

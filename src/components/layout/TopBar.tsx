@@ -78,16 +78,35 @@ export const TopBar: React.FC = () => {
       case 'overview': return 'Studio Overview';
       case 'projects': return 'Projects';
       case 'clients': return 'Client Directory';
+      case 'leads': return 'Lead Pipeline';
+      case 'quotations': return 'Quotations';
+      case 'change-requests': return 'Change Requests';
+      case 'site-controls': return 'Contractor Bills & Wastage';
+      case 'client-portal': return 'Client Portal';
+      case 'tasks': return 'Tasks & Schedule';
+      case 'documents': return 'Studio Documents';
+      case 'vendors': return 'Vendors';
+      case 'payments': return 'Client Payments';
+      case 'purchases': return 'Purchasing';
       case 'expenses': return 'Expense Ledger';
       case 'budget': return 'Budget Analytics';
+      case 'reports': return 'Reports & Insights';
+      case 'team': return 'Team Workspace';
+      case 'management': return 'Management';
+      case 'branches': return 'Branches';
+      case 'approvals': return 'Approvals';
+      case 'roles': return 'Roles & Access';
+      case 'export': return 'Data Export';
       case 'settings': return 'Studio Settings';
       case 'project-detail': return selectedProject ? selectedProject.name : 'Project Workspace';
+      case 'calendar': return 'Studio Calendar';
+      case 'workspace': return 'Team Workspace';
       default: return 'Overview';
     }
   };
 
   return (
-    <header className="h-16 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-20 shrink-0">
+    <header className="app-topbar px-3 sm:px-6 flex items-center justify-between sticky top-0 z-20 shrink-0 backdrop-blur-xl">
       {/* Left: Mobile & Tablet Hamburger + Contextual Page Title */}
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
@@ -188,11 +207,15 @@ export const TopBar: React.FC = () => {
             onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
             className="flex items-center gap-1.5 p-1 rounded-xl hover:bg-slate-100 transition-colors focus:outline-none cursor-pointer"
           >
-            <img
-              src={profile?.avatar_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"}
-              alt={displayName}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg object-cover ring-1 ring-slate-300"
-            />
+            <span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand-500 to-indigo-600 text-[10px] font-extrabold text-white ring-1 ring-slate-200">
+              <span aria-hidden="true">{displayName.split(/\s+/).map(part => part[0]).slice(0, 2).join('').toUpperCase()}</span>
+              {profile?.avatar_url && <img
+                src={profile.avatar_url}
+                alt=""
+                className="absolute inset-0 h-full w-full rounded-xl object-cover"
+                onError={(event) => { event.currentTarget.style.display = 'none'; }}
+              />}
+            </span>
             <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${isProfileMenuOpen ? 'rotate-180' : ''}`} />
           </button>
 
