@@ -21,7 +21,8 @@ import {
   ShoppingBag,
   ExternalLink,
   ShieldCheck,
-  Filter
+  Filter,
+  UserRound
 } from 'lucide-react';
 import { VendorModal } from '../components/modals/VendorModal';
 import { EmptyState } from '../components/common/EmptyState';
@@ -196,7 +197,7 @@ export const VendorsPage: React.FC = () => {
                         </h3>
                         {vendor.contact_person && (
                           <span className="text-xs text-slate-500 block">
-                            👤 {vendor.contact_person}
+                            <span className="inline-flex items-center gap-1.5"><UserRound className="h-3.5 w-3.5 text-slate-400" />{vendor.contact_person}</span>
                           </span>
                         )}
                       </div>

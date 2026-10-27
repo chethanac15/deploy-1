@@ -85,7 +85,7 @@ export const ProjectsPage: React.FC = () => {
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-500/20 hover:shadow-lg transition-all self-start sm:self-auto cursor-pointer"
         >
           <Plus className="w-4 h-4" />
-          <span>+ New Project</span>
+          <span>New project</span>
         </button>
       </div>
 

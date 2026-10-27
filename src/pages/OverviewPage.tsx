@@ -11,7 +11,6 @@ import {
   Calendar, 
   MapPin, 
   ChevronRight,
-  Sparkles,
   PieChart as PieChartIcon,
   Clock,
   ArrowRight,
@@ -221,7 +220,7 @@ export const OverviewPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-900 tracking-tight">
-              Welcome, {userFirstName} 👋
+              Welcome, {userFirstName}
             </h1>
             <p className="text-sm text-slate-500 mt-1">
               Your company workspace for <strong className="text-slate-800 font-bold">{companyName}</strong> is ready.
@@ -234,83 +233,83 @@ export const OverviewPage: React.FC = () => {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-500/20 hover:shadow-lg transition-all cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>+ Create First Project</span>
+              <span>Create first project</span>
             </button>
           </div>
         </div>
 
         {/* Welcome Onboarding Checklist Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-[#0F172A] to-slate-900 text-white shadow-xl border border-slate-800 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="p-6 sm:p-8 rounded-2xl bg-white text-slate-900 shadow-sm border border-slate-200 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-brand-50 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/20 border border-brand-400/30 text-brand-300 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Quick Onboarding Guide</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-100 text-brand-700 text-xs font-semibold">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+              <span>Getting started</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold font-display tracking-tight text-slate-950">
               Get started with your interior studio in 5 simple steps
             </h2>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
-              Apni Estate Interiors helps your team organize turnkey projects, manage multi-room budgets, track live material stock, and publish daily site updates for clients.
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl">
+              Bring project scope, budgets, materials and site updates into one clear workspace.
             </p>
 
             {/* Onboarding Step Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
               <div 
                 onClick={() => setCurrentPage('clients')}
-                className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60 hover:border-brand-500/60 transition-all cursor-pointer group"
+                className="p-4 rounded-xl bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50/40 transition-all cursor-pointer group"
               >
                 <div className="flex items-center gap-2.5 text-brand-400 mb-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-brand-500/20 flex items-center justify-center text-xs font-black">1</div>
-                  <span className="text-xs font-bold text-white group-hover:text-brand-300">Add First Client</span>
+                  <div className="w-6 h-6 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center text-xs font-bold">1</div>
+                  <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Add your first client</span>
                 </div>
-                <p className="text-[11px] text-slate-400">Save client contact details, site address, and preferences.</p>
+                <p className="text-[11px] text-slate-500">Keep contact details and project preferences together.</p>
               </div>
 
               <div 
                 onClick={() => setIsNewProjectModalOpen(true)}
-                className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60 hover:border-brand-500/60 transition-all cursor-pointer group"
+                className="p-4 rounded-xl bg-white border border-slate-200 hover:border-brand-300 hover:bg-brand-50/40 transition-all cursor-pointer group"
               >
-                <div className="flex items-center gap-2.5 text-purple-400 mb-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-purple-500/20 flex items-center justify-center text-xs font-black">2</div>
-                  <span className="text-xs font-bold text-white group-hover:text-purple-300">Create Project</span>
+                <div className="flex items-center gap-2.5 text-brand-700 mb-1.5">
+                  <div className="w-6 h-6 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center text-xs font-bold">2</div>
+                  <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Create a project</span>
                 </div>
-                <p className="text-[11px] text-slate-400">Set project contract value, timeline deadlines, and location.</p>
+                <p className="text-[11px] text-slate-500">Set the scope, budget, location and target dates.</p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60">
-                <div className="flex items-center gap-2.5 text-emerald-400 mb-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center text-xs font-black">3</div>
-                  <span className="text-xs font-bold text-white">Define Room Scope</span>
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="flex items-center gap-2.5 text-brand-700 mb-1.5">
+                  <div className="w-6 h-6 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center text-xs font-bold">3</div>
+                  <span className="text-xs font-semibold text-slate-900">Define room scope</span>
                 </div>
-                <p className="text-[11px] text-slate-400">Divide projects into Living Room, Kitchen, Master Bed, etc.</p>
+                <p className="text-[11px] text-slate-500">Break down the work by room and deliverable.</p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60">
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
                 <div className="flex items-center gap-2.5 text-amber-400 mb-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-amber-500/20 flex items-center justify-center text-xs font-black">4</div>
-                  <span className="text-xs font-bold text-white">Build BOQ Estimates</span>
+                  <div className="w-6 h-6 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center text-xs font-bold">4</div>
+                  <span className="text-xs font-semibold text-slate-900">Build the estimate</span>
                 </div>
-                <p className="text-[11px] text-slate-400">Itemize civil, woodwork, electrical, and finish costs.</p>
+                <p className="text-[11px] text-slate-500">Add quantities, materials and trade costs.</p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-800/60 border border-slate-700/60">
-                <div className="flex items-center gap-2.5 text-cyan-400 mb-1.5">
-                  <div className="w-6 h-6 rounded-lg bg-cyan-500/20 flex items-center justify-center text-xs font-black">5</div>
-                  <span className="text-xs font-bold text-white">Log Site Activity</span>
+              <div className="p-4 rounded-xl bg-white border border-slate-200">
+                <div className="flex items-center gap-2.5 text-brand-700 mb-1.5">
+                  <div className="w-6 h-6 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center text-xs font-bold">5</div>
+                  <span className="text-xs font-semibold text-slate-900">Track site progress</span>
                 </div>
-                <p className="text-[11px] text-slate-400">Record daily site diary DPRs, materials stock, and photos.</p>
+                <p className="text-[11px] text-slate-500">Keep daily updates, stock and photos in context.</p>
               </div>
 
               <div 
                 onClick={() => setIsNewProjectModalOpen(true)}
-                className="p-4 rounded-2xl bg-brand-600/20 border border-brand-500/40 hover:bg-brand-600/30 transition-all cursor-pointer flex flex-col justify-center text-center"
+                className="p-4 rounded-xl bg-amber-50 border border-amber-200 hover:bg-amber-100/70 transition-all cursor-pointer flex flex-col justify-center text-center"
               >
-                <div className="text-xs font-bold text-brand-300 mb-0.5">+ Launch First Project</div>
-                <div className="text-[10px] text-slate-400">Takes less than 60 seconds</div>
+                <div className="text-xs font-semibold text-slate-900 mb-0.5">Start with a project</div>
+                <div className="text-[10px] text-slate-500">You can add details as you go</div>
               </div>
             </div>
           </div>
@@ -352,61 +351,60 @@ export const OverviewPage: React.FC = () => {
   return (
     <div className="space-y-6 sm:space-y-7 animate-in fade-in duration-300 pb-12">
       {/* Dashboard Top Header */}
-      <section className="dashboard-hero grid gap-6 p-5 text-white sm:p-7 lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.42fr)] lg:items-center lg:p-8">
+      <section className="dashboard-hero grid gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_minmax(220px,0.42fr)] lg:items-center lg:p-8">
         <div className="relative z-10">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.08] px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-blue-100">
-            <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-            Studio snapshot
+          <div className="mb-3 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.13em] text-brand-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
+            Studio overview
           </div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl lg:text-[2.1rem]">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl lg:text-[2.1rem]">
             Good day, {userFirstName}
-            <span aria-hidden="true" className="ml-2 text-amber-300">✦</span>
           </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">
-            A clear view of <strong className="font-bold text-white">{companyName}</strong> — your team's live project delivery, financial position, and priorities.
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
+            Projects, budgets and decisions for <strong className="font-semibold text-slate-900">{companyName}</strong> — together in one view.
           </p>
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <button
               onClick={() => setIsNewProjectModalOpen(true)}
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-slate-900 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:bg-blue-50"
+              className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-brand-600 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-brand-700"
             >
-              <Plus className="h-4 w-4 text-brand-600" />
+              <Plus className="h-4 w-4 text-white" />
               New project
             </button>
-            <span className="text-xs font-medium text-slate-300">
+            <span className="text-xs font-medium text-slate-500">
               {stats.activeProjectsCount} active project{stats.activeProjectsCount === 1 ? '' : 's'} across your portfolio
             </span>
           </div>
         </div>
-        <div className="dashboard-hero-panel relative z-10 rounded-2xl p-4 sm:p-5">
+        <div className="dashboard-hero-panel relative z-10 rounded-xl p-4 sm:p-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-blue-100/70">Portfolio pulse</p>
-              <p className="mt-1.5 text-xl font-extrabold tracking-tight text-white">{stats.activeProjectsCount} live sites</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-500">Portfolio health</p>
+              <p className="mt-1.5 text-xl font-bold tracking-tight text-slate-950">{stats.activeProjectsCount} active sites</p>
             </div>
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-300/10 text-emerald-300">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-100 text-amber-800">
               <TrendingUp className="h-4 w-4" />
             </span>
           </div>
           <div className="mt-4 flex items-center justify-between gap-3 text-xs">
-            <span className="font-semibold text-slate-300">
+            <span className="font-medium text-slate-600">
               {projectsNeedingAttention === 0 ? 'All active sites on track' : `${projectsNeedingAttention} site${projectsNeedingAttention === 1 ? '' : 's'} need attention`}
             </span>
-            <span className="font-extrabold text-white">
+            <span className="font-bold text-slate-900">
               {deliveryHealthPercent}%
             </span>
           </div>
-          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-200">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-emerald-300 to-cyan-300 transition-[width] duration-700"
+              className="h-full rounded-full bg-brand-600 transition-[width] duration-700"
               style={{
                 width: `${deliveryHealthPercent}%`
               }}
             />
           </div>
-          <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
-            <span className="text-xs text-slate-300">Projects needing attention</span>
-            <span className={`rounded-full px-2.5 py-1 text-[11px] font-extrabold ${projectsNeedingAttention ? 'bg-amber-300/15 text-amber-200' : 'bg-emerald-300/15 text-emerald-200'}`}>
+          <div className="mt-4 flex items-center justify-between border-t border-amber-200/70 pt-3">
+            <span className="text-xs text-slate-600">Projects needing attention</span>
+            <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${projectsNeedingAttention ? 'bg-amber-200 text-amber-950' : 'bg-emerald-100 text-emerald-800'}`}>
               {projectsNeedingAttention}
             </span>
           </div>
@@ -440,7 +438,7 @@ export const OverviewPage: React.FC = () => {
         <div className="premium-card metric-card metric-card--teal p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.11em] text-slate-500">Total project value</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
@@ -459,7 +457,7 @@ export const OverviewPage: React.FC = () => {
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.11em] text-slate-500">Total budget</span>
-            <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-9 h-9 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center group-hover:scale-110 transition-transform">
               <IndianRupee className="w-4 h-4" />
             </div>
           </div>
@@ -501,29 +499,29 @@ export const OverviewPage: React.FC = () => {
             <button onClick={() => setCurrentPage('reports')} className="text-xs font-bold text-brand-700 hover:underline">Financial reports</button>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-            <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Contract value</p>
-              <p className="mt-1 text-sm font-black text-slate-900">{formatINRCompact(contractValue)}</p>
+            <div className="rounded-lg bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Contract value</p>
+              <p className="mt-1 text-sm font-bold text-slate-900">{formatINRCompact(contractValue)}</p>
             </div>
-            <div className="rounded-xl bg-emerald-50/70 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">Revenue received</p>
-              <p className="mt-1 text-sm font-black text-emerald-800">{formatINRCompact(revenueReceived)}</p>
+            <div className="rounded-lg bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Revenue received</p>
+              <p className="mt-1 text-sm font-bold text-brand-700">{formatINRCompact(revenueReceived)}</p>
             </div>
-            <div className="rounded-xl bg-amber-50/70 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700">Actual cost</p>
-              <p className="mt-1 text-sm font-black text-amber-800">{formatINRCompact(actualCost)}</p>
+            <div className="rounded-lg bg-amber-50/70 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-800">Actual cost</p>
+              <p className="mt-1 text-sm font-bold text-slate-900">{formatINRCompact(actualCost)}</p>
             </div>
-            <div className="rounded-xl bg-indigo-50/70 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-indigo-700">Current profit</p>
-              <p className={`mt-1 text-sm font-black ${currentProfit < 0 ? 'text-rose-700' : 'text-indigo-800'}`}>{formatINRCompact(currentProfit)}</p>
+            <div className="rounded-lg bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Current profit</p>
+              <p className={`mt-1 text-sm font-bold ${currentProfit < 0 ? 'text-rose-700' : 'text-brand-700'}`}>{formatINRCompact(currentProfit)}</p>
             </div>
-            <div className="rounded-xl bg-purple-50/70 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-purple-700">Profit margin</p>
-              <p className={`mt-1 text-sm font-black ${currentMargin < 0 ? 'text-rose-700' : 'text-purple-800'}`}>{currentMargin.toFixed(1)}%</p>
+            <div className="rounded-lg bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Profit margin</p>
+              <p className={`mt-1 text-sm font-bold ${currentMargin < 0 ? 'text-rose-700' : 'text-brand-700'}`}>{currentMargin.toFixed(1)}%</p>
             </div>
-            <div className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Outstanding revenue</p>
-              <p className="mt-1 text-sm font-black text-slate-900">{formatINRCompact(Math.max(contractValue - revenueReceived, 0))}</p>
+            <div className="rounded-lg bg-slate-50 p-3">
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">Outstanding revenue</p>
+              <p className="mt-1 text-sm font-bold text-slate-900">{formatINRCompact(Math.max(contractValue - revenueReceived, 0))}</p>
             </div>
           </div>
         </div>
@@ -545,8 +543,8 @@ export const OverviewPage: React.FC = () => {
             <button onClick={() => setCurrentPage('quotations')} className="flex w-full items-center justify-between gap-3 rounded-xl bg-amber-50 px-3 py-2.5 text-left hover:bg-amber-100">
               <span className="text-xs font-semibold text-slate-700">Client approvals</span><span className="text-sm font-black text-amber-800">{pendingClientApprovals}</span>
             </button>
-            <button onClick={() => setCurrentPage('purchases')} className="flex w-full items-center justify-between gap-3 rounded-xl bg-indigo-50 px-3 py-2.5 text-left hover:bg-indigo-100">
-              <span className="text-xs font-semibold text-slate-700">Open purchase orders</span><span className="text-sm font-black text-indigo-800">{openPurchaseOrders}</span>
+            <button onClick={() => setCurrentPage('purchases')} className="flex w-full items-center justify-between gap-3 rounded-lg bg-brand-50 px-3 py-2.5 text-left hover:bg-brand-100">
+              <span className="text-xs font-semibold text-slate-700">Open purchase orders</span><span className="text-sm font-bold text-brand-800">{openPurchaseOrders}</span>
             </button>
             <button onClick={() => setCurrentPage('tasks')} className="flex w-full items-center justify-between gap-3 rounded-xl bg-rose-50 px-3 py-2.5 text-left hover:bg-rose-100">
               <span className="text-xs font-semibold text-slate-700">Overdue tasks</span><span className="text-sm font-black text-rose-800">{overdueTaskCount}</span>

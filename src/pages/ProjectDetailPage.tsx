@@ -39,6 +39,7 @@ import {
   ArrowUpRight,
   UploadCloud,
   Users,
+  UserRound,
   ArrowRight,
   X,
   AlertTriangle,
@@ -2180,7 +2181,7 @@ export const ProjectDetailPage: React.FC = () => {
                         )}
                         <div className="flex items-center gap-3 text-[11px] text-slate-400 mt-2">
                           {t.due_date && <span>Due: {formatDate(t.due_date)}</span>}
-                          {t.assigned_staff_name && <span className="font-semibold text-slate-600">👤 {t.assigned_staff_name}</span>}
+                          {t.assigned_staff_name && <span className="inline-flex items-center gap-1 font-medium text-slate-600"><UserRound className="h-3.5 w-3.5 text-slate-400" />{t.assigned_staff_name}</span>}
                         </div>
                       </div>
                     </div>

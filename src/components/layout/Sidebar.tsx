@@ -181,9 +181,9 @@ export const Sidebar: React.FC = () => {
   const renderSidebarContent = (isMobile = false) => (
     <div className="flex flex-col h-full select-none">
       {/* Brand Header */}
-      <div className="p-4 sm:p-5 pb-4 border-b border-slate-800/80 flex items-center justify-between">
+      <div className="p-4 sm:p-5 pb-4 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 rounded-xl bg-[#1E293B] border border-slate-700/60 flex items-center justify-center text-white shadow-md shrink-0 p-1">
+          <div className="w-9 h-9 rounded-xl bg-brand-600 flex items-center justify-center text-white shrink-0 p-1">
             <svg 
               className="w-full h-full" 
               viewBox="0 0 200 200" 
@@ -192,7 +192,7 @@ export const Sidebar: React.FC = () => {
             >
               <path 
                 d="M 20 15 L 180 15 L 180 135 L 135 75 L 95 125 L 95 90 L 60 90 L 60 145 L 20 200 Z" 
-                fill="#FFFFFF" 
+                fill="#FFFFFF"
               />
               <rect x="123" y="115" width="10" height="10" rx="0.5" fill="#FFFFFF" />
               <rect x="137" y="115" width="10" height="10" rx="0.5" fill="#FFFFFF" />
@@ -202,16 +202,16 @@ export const Sidebar: React.FC = () => {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
-              <span className="font-display font-extrabold text-base text-white tracking-tight truncate">
+              <span className="font-display font-bold text-base text-slate-950 tracking-tight truncate">
                 {isDemoMode ? 'Apni Estate' : studioName}
               </span>
             </div>
             <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-[9px] font-extrabold tracking-widest text-brand-400 uppercase bg-brand-950/90 px-1.5 py-0.5 rounded border border-brand-800/50">
+              <span className="text-[9px] font-bold tracking-widest text-brand-700 uppercase bg-brand-50 px-1.5 py-0.5 rounded">
                 INTERIORS
               </span>
               {isDemoMode && !user && (
-                <span className="text-[9px] font-bold text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-700/50">
+                <span className="text-[9px] font-bold text-amber-900 bg-amber-100 px-1.5 py-0.5 rounded">
                   DEMO
                 </span>
               )}
@@ -222,7 +222,7 @@ export const Sidebar: React.FC = () => {
         {isMobile && (
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2"
+            className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center -mr-2"
             aria-label="Close Menu"
           >
             <X className="w-5 h-5" />
@@ -234,10 +234,10 @@ export const Sidebar: React.FC = () => {
       <div className="px-4 pt-3.5 pb-2">
         <button
           onClick={handleNewProjectClick}
-          className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-bold text-xs shadow-md shadow-brand-900/40 hover:shadow-lg transition-all duration-200 group active:scale-[0.98] cursor-pointer min-h-[42px]"
+          className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[13px] transition-colors duration-150 group active:scale-[0.99] cursor-pointer min-h-[42px]"
         >
           <Plus className="w-4 h-4 transition-transform group-hover:rotate-90 duration-200" />
-          <span>+ New Project</span>
+          <span>New project</span>
         </button>
       </div>
 
@@ -245,7 +245,7 @@ export const Sidebar: React.FC = () => {
       <div className="flex-1 px-3 py-1 space-y-3 overflow-y-auto">
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-0.5">
-            <div className="px-3 pt-2 pb-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">
+            <div className="px-3 pt-3 pb-1.5 text-[10px] font-bold uppercase tracking-[0.11em] text-slate-400">
               {group.groupLabel}
             </div>
             {group.items.map((item) => {
@@ -255,19 +255,19 @@ export const Sidebar: React.FC = () => {
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`relative w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[13px] font-semibold transition-all cursor-pointer min-h-[42px] ${
+                  className={`relative w-full flex items-center justify-between px-3 py-2 rounded-lg text-[13px] font-medium transition-colors cursor-pointer min-h-[38px] ${
                     isActive
-                      ? 'bg-gradient-to-r from-brand-600/25 to-brand-500/10 text-white border border-brand-400/25 shadow-sm font-bold'
-                      : 'text-slate-400 hover:text-white hover:bg-white/[0.055]'
+                      ? 'bg-brand-50 text-brand-700 font-semibold'
+                      : 'text-slate-600 hover:text-slate-950 hover:bg-slate-50'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`w-[17px] h-[17px] ${isActive ? 'text-brand-300' : 'text-slate-500 group-hover:text-slate-300'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-brand-600' : 'text-slate-400'}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge !== undefined && item.badge > 0 && (
                     <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                      isActive ? 'bg-brand-500 text-white' : 'bg-slate-800 text-slate-400'
+                      isActive ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-500'
                     }`}>
                       {item.badge}
                     </span>
@@ -281,12 +281,12 @@ export const Sidebar: React.FC = () => {
         {/* Demo Workspace Banner or Subscription Card */}
         {isDemoMode && !user ? (
           <div className="pt-2 px-1">
-            <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-950/50 to-slate-900 border border-amber-700/40">
-              <div className="flex items-center gap-1.5 text-[11px] font-bold text-amber-400 mb-1">
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <div className="p-3 rounded-xl bg-amber-50 border border-amber-200">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-900 mb-1">
+                <Sparkles className="w-3.5 h-3.5 text-amber-700" />
                 <span>Demo Workspace</span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed mb-2">
+              <p className="text-[11px] text-slate-600 leading-relaxed mb-2">
                 Exploring sample studio data. Register your company to start your 15-day trial.
               </p>
               <button
@@ -294,7 +294,7 @@ export const Sidebar: React.FC = () => {
                   setIsMobileMenuOpen(false);
                   setIsDemoMode(false);
                 }}
-                className="w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-[11px] font-bold transition-all text-center shadow-xs flex items-center justify-center gap-1 cursor-pointer min-h-[36px]"
+                className="w-full py-2 px-3 rounded-lg bg-amber-300 hover:bg-amber-400 text-amber-950 text-[11px] font-semibold transition-colors text-center flex items-center justify-center gap-1 cursor-pointer min-h-[36px]"
               >
                 <span>Exit Demo & Sign Up</span>
                 <ChevronRight className="w-3 h-3" />
@@ -308,25 +308,25 @@ export const Sidebar: React.FC = () => {
                 setIsMobileMenuOpen(false);
                 setIsPricingModalOpen(true);
               }}
-              className="p-3 rounded-2xl bg-gradient-to-br from-indigo-950/60 to-slate-900 border border-indigo-800/40 hover:border-brand-500/50 cursor-pointer transition-all group"
+              className="p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-brand-200 cursor-pointer transition-colors group"
             >
               <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400">
-                  <Crown className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
+                  <Crown className="w-3.5 h-3.5 text-amber-600" />
                   <span>{planDisplayName} Plan</span>
                 </div>
                 <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${
                   trialStatus === 'active'
-                    ? 'bg-emerald-950 text-emerald-300 border-emerald-800/50'
-                    : 'bg-indigo-900 text-indigo-300 border-indigo-700/50'
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    : 'bg-brand-50 text-brand-700 border-brand-200'
                 }`}>
                   {trialStatus === 'active' ? 'Active' : `${daysRemaining}d Trial`}
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed mb-1">
+              <p className="text-[11px] text-slate-500 leading-relaxed mb-1">
                 {trialStatus === 'active' ? 'Active studio subscription' : `15-day trial • ${daysRemaining} days left`}
               </p>
-              <div className="flex items-center gap-1 text-[10px] font-bold text-brand-400 group-hover:text-brand-300">
+              <div className="flex items-center gap-1 text-[10px] font-semibold text-brand-700 group-hover:text-brand-800">
                 <Sparkles className="w-3 h-3" />
                 <span>Plans & Invoicing →</span>
               </div>
@@ -336,11 +336,11 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* User Profile Footer */}
-      <div className="p-3 border-t border-slate-800/80 bg-slate-950/40">
+      <div className="p-3 border-t border-slate-100 bg-white">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="relative shrink-0">
-              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand-400 to-indigo-600 text-[11px] font-extrabold text-white ring-1 ring-white/20">
+              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-brand-100 text-[11px] font-bold text-brand-700 ring-1 ring-brand-200">
                 <span aria-hidden="true">{displayName.split(/\s+/).map(part => part[0]).slice(0, 2).join('').toUpperCase()}</span>
                 {profile?.avatar_url && <img
                   src={profile.avatar_url}
@@ -349,11 +349,11 @@ export const Sidebar: React.FC = () => {
                   onError={(event) => { event.currentTarget.style.display = 'none'; }}
                 />}
               </div>
-              <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-slate-900" />
+              <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-white" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="text-xs font-bold text-white truncate">{displayName}</div>
-              <div className="text-[10px] text-slate-400 truncate">{roleDisplay()}</div>
+              <div className="text-xs font-semibold text-slate-900 truncate">{displayName}</div>
+              <div className="text-[10px] text-slate-500 truncate">{roleDisplay()}</div>
             </div>
           </div>
 
@@ -363,7 +363,7 @@ export const Sidebar: React.FC = () => {
               signOut();
             }}
             title={user ? "Sign Out" : "Exit Demo"}
-            className="p-2 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-slate-800/80 transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
+            className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer min-h-[40px] min-w-[40px] flex items-center justify-center"
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -375,7 +375,7 @@ export const Sidebar: React.FC = () => {
   return (
     <>
       {/* 1. Desktop Fixed Sidebar */}
-      <aside className="hidden lg:flex w-64 bg-[#0F172A] text-slate-300 flex-col h-full border-r border-slate-800/80 select-none z-30 shrink-0">
+      <aside className="hidden lg:flex w-64 bg-white text-slate-700 flex-col h-full border-r border-slate-200 select-none z-30 shrink-0">
         {renderSidebarContent(false)}
       </aside>
 
@@ -384,12 +384,12 @@ export const Sidebar: React.FC = () => {
         <div className="fixed inset-0 z-50 lg:hidden animate-in fade-in duration-200">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-slate-950/70 backdrop-blur-xs transition-opacity"
+            className="fixed inset-0 bg-slate-950/35 backdrop-blur-[2px] transition-opacity"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
           {/* Drawer Panel */}
-          <div className="fixed inset-y-0 left-0 w-[290px] max-w-[85vw] bg-[#0F172A] text-slate-300 shadow-2xl border-r border-slate-800 z-50 animate-in slide-in-from-left duration-200">
+          <div className="fixed inset-y-0 left-0 w-[290px] max-w-[85vw] bg-white text-slate-700 shadow-2xl border-r border-slate-200 z-50 animate-in slide-in-from-left duration-200">
             {renderSidebarContent(true)}
           </div>
         </div>

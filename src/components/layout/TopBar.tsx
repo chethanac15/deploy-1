@@ -3,7 +3,6 @@ import {
   Search, 
   Bell, 
   Plus, 
-  Sparkles, 
   LogOut, 
   User, 
   Settings, 
@@ -117,7 +116,7 @@ export const TopBar: React.FC = () => {
           <Menu className="w-5 h-5" />
         </button>
 
-        <h1 className="text-xs sm:text-base font-extrabold font-display text-slate-900 truncate">
+        <h1 className="text-sm sm:text-base font-semibold font-display text-slate-900 truncate">
           {getPageTitle()}
         </h1>
         {currentPage === 'project-detail' && selectedProject && (
@@ -159,11 +158,12 @@ export const TopBar: React.FC = () => {
         {/* Quick Add Expense Action */}
         <button
           onClick={() => setIsAddExpenseModalOpen(true)}
-          className="inline-flex items-center gap-1 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-[11px] sm:text-xs font-bold shadow-xs transition-all cursor-pointer active:scale-95 min-h-[38px]"
+          aria-label="Add expense"
+          title="Add expense"
+          className="inline-flex items-center gap-1 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-[11px] sm:text-xs font-semibold transition-colors cursor-pointer active:scale-[0.99] min-h-[38px]"
         >
-          <Plus className="w-3.5 h-3.5 text-brand-400" />
-          <span className="hidden xs:inline">+ Expense</span>
-          <span className="xs:hidden">+ Exp</span>
+          <Plus className="w-3.5 h-3.5 text-white" />
+          <span className="hidden sm:inline">Add expense</span>
         </button>
 
         {/* Notifications Icon Button */}
@@ -186,7 +186,7 @@ export const TopBar: React.FC = () => {
             onClick={() => setIsDemoMode(false)}
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold hover:bg-amber-100 transition-all shadow-xs cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <Building2 className="w-3.5 h-3.5 text-amber-700" />
             <span>Demo Workspace</span>
           </button>
         ) : (
@@ -194,7 +194,7 @@ export const TopBar: React.FC = () => {
             onClick={() => setIsPricingModalOpen(true)}
             className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-brand-50 to-indigo-50 text-brand-900 border border-brand-200 text-xs font-bold hover:border-brand-300 transition-all shadow-xs cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-brand-600" />
+            <CreditCard className="w-3.5 h-3.5 text-brand-600" />
             <span>
               {trialStatus === 'active' ? 'Active Plan' : `Trial • ${daysRemaining}d left`}
             </span>
@@ -207,7 +207,7 @@ export const TopBar: React.FC = () => {
             onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
             className="flex items-center gap-1.5 p-1 rounded-xl hover:bg-slate-100 transition-colors focus:outline-none cursor-pointer"
           >
-            <span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-brand-500 to-indigo-600 text-[10px] font-extrabold text-white ring-1 ring-slate-200">
+            <span className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-brand-100 text-[10px] font-bold text-brand-700 ring-1 ring-brand-200">
               <span aria-hidden="true">{displayName.split(/\s+/).map(part => part[0]).slice(0, 2).join('').toUpperCase()}</span>
               {profile?.avatar_url && <img
                 src={profile.avatar_url}

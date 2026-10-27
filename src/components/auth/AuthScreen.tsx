@@ -154,17 +154,14 @@ export const AuthScreen: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F5EE] text-[#1E293B] relative flex flex-col justify-between overflow-x-hidden font-sans selection:bg-[#B27D52] selection:text-white">
-      {/* Background Layer with warm natural lighting and interior studio visual */}
+    <div className="auth-screen min-h-screen bg-[#F7F8FB] text-slate-800 relative flex flex-col justify-between overflow-x-hidden font-sans selection:bg-brand-600 selection:text-white">
+      {/* Quiet, low-contrast backdrop keeps focus on the sign-in flow. */}
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
+        className="absolute inset-0 bg-no-repeat z-0"
         style={{ 
-          backgroundImage: `url('/interior_studio_office_bg.jpg')`
+          backgroundImage: 'radial-gradient(ellipse at 75% 20%, rgba(49, 89, 217, 0.075), transparent 34rem)'
         }}
       >
-        {/* Soft natural lighting gradient masks */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F7F5EE] via-[#F7F5EE]/95 via-40% to-[#F7F5EE]/25 lg:to-transparent" />
-        <div className="absolute inset-0 bg-[#091D34]/5 backdrop-blur-[0.5px]" />
       </div>
 
       {/* Main Responsive Grid Container */}
@@ -181,43 +178,41 @@ export const AuthScreen: React.FC = () => {
               <ApniEstateLogo size="md" variant="dark" />
               <div className="hidden sm:block h-8 w-px bg-[#CBB7A2]/80" />
               <div className="hidden sm:block text-[9.5px] font-bold tracking-[0.26em] text-[#64748B] uppercase leading-relaxed font-sans">
-                INTERIOR STUDIO<br />MANAGEMENT SOFTWARE
+                INTERIOR STUDIO<br />WORKSPACE
               </div>
             </div>
 
-            {/* Editorial Headline with Cormorant Garamond & Playfair Display */}
+            {/* Product positioning */}
             <div className="space-y-4 max-w-xl">
-              <h1 className="text-5xl sm:text-6xl lg:text-[72px] font-medium text-[#091D34] tracking-tight leading-[1.04] [font-family:'Cormorant_Garamond',serif]">
-                Manage<br />
-                <span className="text-[#B27D52] italic font-semibold [font-family:'Playfair_Display',serif] pr-1">Interiors</span><br />
-                Like a Pro
+              <h1 className="text-5xl sm:text-6xl lg:text-[64px] font-bold text-[#14213D] tracking-tight leading-[1.06] [font-family:'Manrope',sans-serif]">
+                Every interior<br />
+                <span className="text-brand-600 font-bold [font-family:'Manrope',sans-serif] pr-1">project,</span><br />
+                under control.
               </h1>
 
               <div className="space-y-1.5 pt-1">
-                <p className="text-sm font-bold tracking-wide text-[#091D34] uppercase [font-family:'Plus_Jakarta_Sans',sans-serif]">
-                  Projects · People · Purchases · Progress.
+                <p className="text-sm font-semibold tracking-wide text-slate-800 [font-family:'DM_Sans',sans-serif]">
+                  Projects · Budgets · Site progress · Client decisions
                 </p>
-                <p className="text-sm sm:text-[15px] text-[#5A5856] font-normal leading-relaxed max-w-md">
-                  All in one workspace — built specifically for interior architecture firms, design studios, and contractors.
+                <p className="text-sm sm:text-[15px] text-slate-600 font-normal leading-relaxed max-w-md">
+                  Keep estimates, procurement and site delivery connected from the first client brief to handover.
                 </p>
               </div>
             </div>
 
-            {/* Circular Bronze Feature Badge */}
-            <div className="inline-flex items-center gap-3 p-1.5 pr-4 rounded-full bg-white/80 border border-[#E8E0D5] shadow-xs backdrop-blur-sm">
-              <div className="w-8 h-8 rounded-full bg-[#8C5E3A] text-white flex items-center justify-center shadow-xs shrink-0">
+            <div className="inline-flex items-center gap-3 p-1.5 pr-4 rounded-xl bg-white border border-slate-200 shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center shrink-0">
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
-              <div className="text-[11px] font-bold tracking-wider text-[#4A4744] uppercase leading-tight font-sans">
-                A Smarter Way to Manage Interiors
+              <div className="text-[11px] font-semibold tracking-wide text-slate-700 leading-tight font-sans">
+                Made for Indian interior studios
               </div>
             </div>
 
-            {/* Bottom Slogan / Separator */}
             <div className="pt-6 sm:pt-10 space-y-3">
-              <div className="w-10 h-0.5 bg-[#CBB7A2]" />
-              <div className="text-[11px] font-bold tracking-[0.35em] text-[#78736E] uppercase font-sans">
-                PLAN · TRACK · GROW
+              <div className="w-10 h-0.5 bg-amber-400" />
+              <div className="text-[11px] font-semibold tracking-[0.16em] text-slate-500 uppercase font-sans">
+                From first estimate to final handover
               </div>
             </div>
 
@@ -236,10 +231,10 @@ export const AuthScreen: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full max-w-[440px] bg-[#FCFAF7]/95 border border-[#ECE5DB] rounded-2xl sm:rounded-[32px] p-4 sm:p-7 lg:p-9 shadow-[0_20px_50px_-10px_rgba(20,15,10,0.08)] backdrop-blur-xl relative">
+            <div className="auth-card w-full max-w-[440px] bg-white border border-slate-200 rounded-2xl p-4 sm:p-7 lg:p-9 shadow-[0_12px_36px_-20px_rgba(20,33,61,0.2)] relative">
               
               {/* Refined 3-Mode Segmented Navigation */}
-              <div className="flex items-center p-1 bg-[#EFECE4] border border-[#E2DDD2] rounded-2xl mb-5 text-[11px] sm:text-xs font-bold">
+              <div className="flex items-center p-1 bg-slate-100 border border-slate-200 rounded-xl mb-5 text-xs font-semibold">
                 <button
                   type="button"
                   onClick={() => {
@@ -248,8 +243,8 @@ export const AuthScreen: React.FC = () => {
                   }}
                   className={`flex-1 py-2 px-1 sm:px-2.5 rounded-xl transition-all cursor-pointer min-h-[38px] text-center truncate ${
                     view === 'signin'
-                      ? 'bg-[#0B213F] text-white shadow-xs'
-                      : 'text-[#5A5856] hover:text-[#0B213F]'
+                      ? 'bg-white text-brand-700 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-950'
                   }`}
                 >
                   Sign In
@@ -262,8 +257,8 @@ export const AuthScreen: React.FC = () => {
                   }}
                   className={`flex-1 py-2 px-1 sm:px-2.5 rounded-xl transition-all cursor-pointer min-h-[38px] text-center truncate ${
                     view === 'signup'
-                      ? 'bg-[#0B213F] text-white shadow-xs'
-                      : 'text-[#5A5856] hover:text-[#0B213F]'
+                      ? 'bg-white text-brand-700 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-950'
                   }`}
                 >
                   Create Account
@@ -276,8 +271,8 @@ export const AuthScreen: React.FC = () => {
                   }}
                   className={`flex-1 py-2 px-1 sm:px-2.5 rounded-xl transition-all cursor-pointer min-h-[38px] text-center truncate ${
                     view === 'demo'
-                      ? 'bg-[#0B213F] text-white shadow-xs'
-                      : 'text-[#5A5856] hover:text-[#0B213F]'
+                      ? 'bg-white text-brand-700 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-950'
                   }`}
                 >
                   Demo Login
@@ -409,14 +404,14 @@ export const AuthScreen: React.FC = () => {
                         setErrorMessage(null);
                         setView('signup');
                       }}
-                      className="w-full py-2.5 px-4 rounded-xl border border-[#D6C5B2] hover:bg-[#F5ECE0]/60 text-[#8C5E3A] font-bold text-xs transition-all text-center cursor-pointer shadow-2xs"
+                      className="w-full py-2.5 px-4 rounded-lg border border-brand-200 hover:bg-brand-50 text-brand-700 font-semibold text-sm transition-colors text-center cursor-pointer"
                     >
                       Start 15-Day Free Trial
                     </button>
                   </div>
 
                   <div className="pt-2 text-center">
-                    <span className="text-[9px] font-bold tracking-[0.25em] text-[#9E988F] uppercase">
+                    <span className="text-[10px] font-semibold tracking-[0.15em] text-slate-400 uppercase">
                       BUILT FOR INTERIOR BUSINESSES
                     </span>
                   </div>
